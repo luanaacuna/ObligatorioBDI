@@ -1,0 +1,82 @@
+<form [formGroup]="loginForm">
+    <p class="text-danger">{{loginError}}</p>
+
+    <div class="mb-3 col-md-6">
+        <label for="cedula" class="form-label">Cédula</label>
+        <input formControlName="cedula" type="text" class="form-control" id="cedula">
+        <div *ngIf="cedula.invalid && (cedula.dirty || cedula.touched)" class="text-danger">
+            <div *ngIf="cedula.errors?.['required']">
+                La cédula es requerida.
+            </div>
+            <div *ngIf="cedula.errors?.['formatoInvalido']">
+                La cédula debe contener solo números y sin guiones.
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mb-3 col-md-6">
+        <label for="nombreCompleto" class="form-label">Nombre Completo</label>
+        <input formControlName="nombreCompleto" type="text" class="form-control" id="nombreCompleto">
+        <div *ngIf="nombreCompleto.invalid && (nombreCompleto.dirty || nombreCompleto.touched)" class="text-danger">
+            <div *ngIf="nombreCompleto.errors?.['required']">
+                El nombre completo es requerido.
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mb-3 col-md-6">
+        <label for="fechaNac" class="form-label">Fecha de Nacimiento</label>
+        <input formControlName="fechaNac" type="date" class="form-control" id="fechaNac">
+        <div *ngIf="fechaNac.invalid && (fechaNac.dirty || fechaNac.touched)" class="text-danger">
+            <div *ngIf="fechaNac.errors?.['required']">
+                La fecha de nacimiento es requerida.
+            </div>
+        </div>
+    </div>
+    
+        
+    <div class="mb-3 col-md-6">
+        <label class="form-label">Tiene carné de salud</label>
+        <div class="form-check form-check-inline mx-3">
+        <input type="radio" formControlName="tieneCarneSalud" [value]="true" class="form-check-input" (change)="toggleFechaVencimiento()"> Sí
+        </div>
+        <div class="form-check form-check-inline">
+             <input type="radio" formControlName="tieneCarneSalud" [value]="false" class="form-check-input" (change)="toggleFechaVencimiento()"> No
+         </div>
+    </div>
+      
+
+          
+     <div class="mb-3 col-md-6" *ngIf="tieneCarneSalud.value === true">
+        <label for="fechaVencimiento" class="form-label">Fecha de Vencimiento</label>
+        <input formControlName="fechaVencimiento" type="date" class="form-control" id="fechaVencimiento">
+        <div *ngIf="fechaVencimiento.invalid && (fechaVencimiento.dirty || fechaVencimiento.touched)" class="text-danger">
+        <div *ngIf="fechaVencimiento.errors?.['required']">
+            La fecha de vencimiento es requerida.
+        </div>
+        </div>
+    </div>
+
+          
+    <div class="mb-3 col-md-6" *ngIf="tieneCarneSalud.value === true">
+        <label for="comprobante" class="form-label">Comprobante (JPG o PDF)</label>
+        <input formControlName="comprobante" type="file" class="form-control" id="comprobante">
+        <div *ngIf="comprobante.invalid && (comprobante.dirty || comprobante.touched)" class="text-danger">
+        <div *ngIf="loginForm.get('comprobante')?.errors?.['required']">
+            El comprobante es requerido.
+        </div>
+        <div *ngIf="comprobante.errors?.['formatoInvalido']">
+            El comprobante debe ser en formato JPG o PDF.
+        </div>
+        </div>
+    </div>
+
+
+
+    <button type="submit" (click)="login()" class="btn btn-primary">Enviar</button>
+    </form>
+
+    <p class="mt-3 ms-3">No tienes cuenta? <a routerLink="/registrar">Registrar</a></p>
+

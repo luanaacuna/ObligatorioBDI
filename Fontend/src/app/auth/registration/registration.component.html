@@ -1,0 +1,117 @@
+<!-- registration.component.html -->
+
+    <h2>Registro</h2>
+    <form [formGroup]="registrationForm" (ngSubmit)="register()">
+
+      <div class="mb-3 col-md-6">
+        <label for="cedula" class="form-label">Cédula</label>
+        <input formControlName="cedula" type="text" class="form-control" id="cedula">
+        <div *ngIf="registrationForm.get('cedula')?.invalid && (registrationForm.get('cedula')?.dirty || registrationForm.get('cedula')?.touched)" class="text-danger">
+          <div *ngIf="registrationForm.get('cedula')?.errors?.['required']">
+            La cédula es requerida.
+          </div>
+          <div *ngIf="registrationForm.get('cedula')?.errors?.['formatoInvalido']">
+            La cédula debe contener solo números y sin guiones.
+          </div>
+        </div>
+      </div>
+  
+      <div class="mb-3 col-md-6">
+        <label for="nombreCompleto" class="form-label">Nombre Completo</label>
+        <input formControlName="nombreCompleto" type="text" class="form-control" id="nombreCompleto">
+        <div *ngIf="registrationForm.get('nombreCompleto')?.invalid && (registrationForm.get('nombreCompleto')?.dirty || registrationForm.get('nombreCompleto')?.touched)" class="text-danger">
+          <div *ngIf="registrationForm.get('nombreCompleto')?.errors?.['required']">
+            El nombre completo es requerido.
+          </div>
+        </div>
+      </div>
+ 
+      <div class="mb-3 col-md-6">
+        <label for="fechaNac" class="form-label">Fecha de Nacimiento</label>
+        <input formControlName="fechaNac" type="date" class="form-control" id="fechaNac">
+        <div *ngIf="registrationForm.get('fechaNac')?.invalid && (registrationForm.get('fechaNac')?.dirty || registrationForm.get('fechaNac')?.touched)" class="text-danger">
+          <div *ngIf="registrationForm.get('fechaNac')?.errors?.['required']">
+            La fecha de nacimiento es requerida.
+          </div>
+        </div>
+      </div>
+  
+    
+      <div class="mb-3 col-md-6">
+        <label class="form-label">Tiene carné de salud</label>
+        <div class="form-check form-check-inline mx-3">
+          <input type="radio" formControlName="tieneCarneSalud" [value]="true" class="form-check-input"  (change)="toggleFechaVencimiento()"> Sí
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" formControlName="tieneCarneSalud" [value]="false" class="form-check-input" (change)="toggleFechaVencimiento()">  No
+        </div>
+      </div>
+  
+      <div class="float-right">
+      <div class="mb-3 col-md-6 " *ngIf="tieneCarneSalud.value === true">
+        <label for="fechaVencimiento" class="form-label">Fecha de Vencimiento</label>
+        <input formControlName="fechaVencimiento" type="date" class="form-control" id="fechaVencimiento">
+        <div *ngIf="fechaVencimiento.invalid && (fechaVencimiento.dirty || fechaVencimiento.touched)" class="text-danger">
+        <div *ngIf="fechaVencimiento.errors?.['required']">
+            La fecha de vencimiento es requerida.
+          </div>
+        </div>
+      </div>
+  
+      
+      <div class="mb-3 col-md-6 " *ngIf="tieneCarneSalud.value === true">
+        <label for="comprobante" class="form-label">Comprobante (JPG o PDF)</label>
+        <input formControlName="comprobante" type="file" class="form-control" id="comprobante">
+        <div *ngIf="comprobante.invalid && (comprobante.dirty || comprobante.touched)" class="text-danger">
+        <div *ngIf="registrationForm.get('comprobante')?.errors?.['required']">
+            El comprobante es requerido.
+        </div>
+        <div *ngIf="comprobante.errors?.['formatoInvalido']">
+            El comprobante debe ser en formato JPG o PDF.
+        </div>
+        </div>
+    </div>
+</div>
+
+
+      <div class="mb-3 col-md-6">
+        <label for="domicilio" class="form-label">Domicilio completo de residencia</label>
+        <input formControlName="domicilio" type="text" class="form-control" id="domicilio">
+        <div *ngIf="registrationForm.get('domicilio')?.invalid && (registrationForm.get('domicilio')?.dirty || registrationForm.get('domicilio')?.touched)" class="text-danger">
+          <div *ngIf="registrationForm.get('domicilio')?.errors?.['required']">
+            El domicilio es requerido.
+          </div>
+        </div>
+      </div>
+  
+      <div class="mb-3 col-md-6">
+        <label for="correoElectronico" class="form-label">Correo electrónico</label>
+        <input formControlName="correoElectronico" type="email" class="form-control" id="correoElectronico">
+        <div *ngIf="registrationForm.get('correoElectronico')?.invalid && (registrationForm.get('correoElectronico')?.dirty || registrationForm.get('correoElectronico')?.touched)" class="text-danger">
+          <div *ngIf="registrationForm.get('correoElectronico')?.errors?.['required']">
+            El correo electrónico es requerido.
+          </div>
+          <div *ngIf="registrationForm.get('correoElectronico')?.errors?.['email']">
+            Ingresa un correo electrónico válido.
+          </div>
+        </div>
+      </div>
+  
+
+      <div class="mb-3 col-md-6">
+        <label for="telefonoContacto" class="form-label">Teléfono de contacto</label>
+        <input formControlName="telefonoContacto" type="tel" class="form-control" id="telefonoContacto">
+        <div *ngIf="registrationForm.get('telefonoContacto')?.invalid && (registrationForm.get('telefonoContacto')?.dirty || registrationForm.get('telefonoContacto')?.touched)" class="text-danger">
+          <div *ngIf="registrationForm.get('telefonoContacto')?.errors?.['required']">
+            El teléfono de contacto es requerido.
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón de envío -->
+      <button type="submit" (click)="register()" class="btn btn-primary">Registrar</button>
+    </form>
+
+  
+
+  
