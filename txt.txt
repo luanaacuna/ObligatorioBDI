@@ -1,0 +1,16 @@
+{
+  "ci": "12345678",
+  "nombre": "Juan",
+  "apellido": "Pérez",
+  "Fch_nacimiento": "1990-01-01",
+  "direccion": "Calle Principal 123",
+  "telefono": "123456789",
+  "email": "juan.perez@example.com",
+  "logId": "1"
+}
+
+{
+  "LogId": 1,
+  "Username": "nombre_usuario",
+  "Password": "contraseña_secreta"
+}
