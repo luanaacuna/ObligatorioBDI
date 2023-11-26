@@ -1,0 +1,89 @@
+CREATE DATABASE Clinica_UCU;
+
+USE ClinicaUCUSalud;
+
+CREATE TABLE `logins` (
+  `LogId` int NOT NULL,
+  `Password` varchar(255) NOT NULL,
+  PRIMARY KEY (`LogId`)
+);
+
+CREATE TABLE `funcionarios` (
+  `Ci` decimal(8,0) NOT NULL,
+  `Nombre` varchar(255) NOT NULL,
+  `Apellido` varchar(255) NOT NULL,
+  `Fch_Nacimiento` date NOT NULL,
+  `Direccion` varchar(255) NOT NULL,
+  `Telefono` decimal(9,0) NOT NULL,
+  `Email` varchar(255) NOT NULL,
+  `LogId` int NOT NULL,
+  PRIMARY KEY (`Ci`),
+  KEY `LogId` (`LogId`),
+  CONSTRAINT `funcionarios_ibfk_1` FOREIGN KEY (`LogId`) REFERENCES `logins` (`LogId`)
+);
+
+CREATE TABLE `agenda` (
+  `Nro` int NOT NULL,
+  `Ci` decimal(8,0) NOT NULL,
+  `Fch_Agenda` date NOT NULL,
+  PRIMARY KEY (`Nro`),
+  KEY `Ci` (`Ci`),
+  CONSTRAINT `agenda_ibfk_1` FOREIGN KEY (`Ci`) REFERENCES `funcionarios` (`Ci`)
+);
+
+CREATE TABLE `carnet_salud` (
+  `Ci` decimal(8,0) NOT NULL,
+  `Fch_Emision` date NOT NULL,
+  `Fch_Vencimiento` date NOT NULL,
+  `Comprobante` blob NOT NULL,
+  PRIMARY KEY (`Ci`),
+  CONSTRAINT `carnet_salud_ibfk_1` FOREIGN KEY (`Ci`) REFERENCES `funcionarios` (`Ci`)
+);
+
+CREATE TABLE `periodos_actualizacion` (
+  `Año` YEAR NOT NULL,
+  `Semestre` ENUM('1', '2') NOT NULL,
+  `Fch_Inicio` DATE NOT NULL,
+  `Fch_Fin` DATE NOT NULL,
+  `periodos_actualizacioncol` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`Año`, `Semestre`));
+
+
+
+
+
+CREATE TRIGGER VerificarFechaAgenda
+    BEFORE INSERT
+    ON Agenda
+    FOR EACH ROW
+BEGIN
+    DECLARE vPeriodo INT;
+    SELECT COUNT(*)
+    INTO vPeriodo
+    FROM Periodos_Actualizacion
+    WHERE NEW.Fch_Agenda BETWEEN Fch_Inicio AND Fch_Fin;
+
+    IF vPeriodo = 0 THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'La fecha de agenda no está dentro de un período de actualización válido.';
+    ELSE
+        UPDATE Cupos C1 SET CitasDisponibles = (SELECT CitasDisponibles FROM Cupos C2 WHERE C1.Fecha = C2.Fecha) - 1
+        WHERE C1.Fecha = NEW.Fch_Agenda;
+    END IF;
+END;
+
+CREATE TRIGGER InsertarCuposPorDia
+    AFTER INSERT
+    ON Periodos_Actualizacion
+    FOR EACH ROW
+BEGIN
+    DECLARE currentDate DATE;
+    SET currentDate = NEW.Fch_Inicio;
+
+    WHILE currentDate <= NEW.Fch_Fin
+        DO
+            INSERT INTO Cupos (Fecha, CitasDisponibles)
+            VALUES (currentDate, 5);
+            SET currentDate = DATE_ADD(currentDate, INTERVAL 1 DAY);
+        END WHILE;
+END;
