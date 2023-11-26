@@ -1,0 +1,25 @@
+div form label {
+    display: block;
+    margin-bottom: 5px; 
+}
+
+div form input {
+    display: block;
+    margin-bottom: 10px; 
+}
+
+
+   /* .with-background {
+        background-image: url('https://media.istockphoto.com/id/1432473911/es/foto/fondo-azul-abstracto-o-papel-oscuro-con-foco-central-brillante-y-marco-de-borde-de-vi%C3%B1eta.jpg?s=612x612&w=0&k=20&c=FUNS-XxJ90pluer43wXLo5nuVJb33eZZQ2Eu9B9Sat8=');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 20px; 
+        border-radius: 10px; 
+    }
+
+    .container {
+        position: relative; 
+    }
+
+ */
