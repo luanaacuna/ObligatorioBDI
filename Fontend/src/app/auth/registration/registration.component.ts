@@ -2,50 +2,77 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-
+import { RegisterService } from 'src/app/services/register.service';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css'],
 })
 export class RegistrationComponent implements OnInit {
   registrationForm = this.formBuilder.group({
     // Otros campos del formulario
-    cedula: ['',Validators.required],
-    nombreCompleto: ['',Validators.required],
-    fechaNac: ['',Validators.required],
-    fechaVencimiento: [{ value: '', disabled: true }, Validators.required],   
+    cedula: ['', Validators.required],
+    nombre: ['', Validators.required],
+    apellido: ['', Validators.required],
+    fechaNac: ['', Validators.required],
+    fechaVencimiento: [{ value: '', disabled: true }, Validators.required],
     comprobante: [{ value: '', disabled: true }, Validators.required],
-    tieneCarneSalud: [null,Validators.required],
-    domicilio: ['', Validators.required], 
-    correoElectronico: ['', [Validators.required, Validators.email]], 
-    telefonoContacto: ['', Validators.required] 
-
+    tieneCarneSalud: [null, Validators.required],
+    domicilio: ['', Validators.required],
+    correoElectronico: ['', [Validators.required, Validators.email]],
+    telefonoContacto: ['', Validators.required],
+    contraseña: ['', Validators.required],
   });
 
-  constructor(private formBuilder: FormBuilder) {}
+  logIdCounter = 0;
 
-  ngOnInit(): void {
-  }
-  
+  constructor(
+    private formBuilder: FormBuilder,
+    private registerService: RegisterService
+  ) {}
 
+  ngOnInit(): void {}
 
-  get fechaVencimiento(){
+  get fechaVencimiento() {
     return this.registrationForm.controls.fechaVencimiento;
   }
 
-  get comprobante(){
+  get comprobante() {
     return this.registrationForm.controls.comprobante;
   }
 
-  get tieneCarneSalud(){
+  get tieneCarneSalud() {
     return this.registrationForm.controls.tieneCarneSalud;
   }
 
   register() {
     if (this.registrationForm.valid) {
-      // Lógica de registro aquí
-      console.log('Registro exitoso', this.registrationForm.value);
+      const datosFuncionario = {
+        ci: this.registrationForm.get('cedula')?.value,
+        nombre: this.registrationForm.get('nombre')?.value,
+        apellido: this.registrationForm.get('apellido')?.value,
+        fecha_nac: this.registrationForm.get('fechaNac')?.value,
+        direccion: this.registrationForm.get('domicilio')?.value,
+        telefono: this.registrationForm.get('telefonoContacto')?.value,
+        email: this.registrationForm.get('correoElectronico')?.value,
+        logId: this.logIdCounter,
+      };
+      console.log('checkpoint 1', datosFuncionario);
+      const datosLogin = {
+        logId: this.logIdCounter,
+        password: this.registrationForm.get('contraseña')?.value,
+      };
+      console.log('checkpoint 2', datosLogin);
+      this.logIdCounter++;
+      this.registerService
+        .register(datosFuncionario, datosLogin)
+        .subscribe((respuesta) => {
+          console.log(
+            'Registro exitoso y checkpoint 6',
+            this.registrationForm.value,
+            respuesta
+          );
+        });
     } else {
       this.registrationForm.markAllAsTouched();
       alert('Error al ingresar los datos.');
@@ -54,7 +81,7 @@ export class RegistrationComponent implements OnInit {
 
   toggleFechaVencimiento() {
     const tieneCarneSaludControl = this.registrationForm.get('tieneCarneSalud');
-  
+
     if (tieneCarneSaludControl && tieneCarneSaludControl.value) {
       this.fechaVencimiento.enable();
       this.comprobante.enable();
@@ -63,5 +90,4 @@ export class RegistrationComponent implements OnInit {
       this.comprobante.disable();
     }
   }
-
 }

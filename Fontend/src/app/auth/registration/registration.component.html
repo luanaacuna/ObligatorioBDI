@@ -17,11 +17,21 @@
       </div>
   
       <div class="mb-3 col-md-6">
-        <label for="nombreCompleto" class="form-label">Nombre Completo</label>
-        <input formControlName="nombreCompleto" type="text" class="form-control" id="nombreCompleto">
-        <div *ngIf="registrationForm.get('nombreCompleto')?.invalid && (registrationForm.get('nombreCompleto')?.dirty || registrationForm.get('nombreCompleto')?.touched)" class="text-danger">
-          <div *ngIf="registrationForm.get('nombreCompleto')?.errors?.['required']">
-            El nombre completo es requerido.
+        <label for="nombre" class="form-label">Nombre</label>
+        <input formControlName="nombre" type="text" class="form-control" id="nombre">
+        <div *ngIf="registrationForm.get('nombre')?.invalid && (registrationForm.get('nombre')?.dirty || registrationForm.get('nombre')?.touched)" class="text-danger">
+          <div *ngIf="registrationForm.get('nombre')?.errors?.['required']">
+            El nombre es requerido.
+          </div>
+        </div>
+      </div>
+      
+      <div class="mb-3 col-md-6">
+        <label for="apellido" class="form-label">Apellido</label>
+        <input formControlName="apellido" type="text" class="form-control" id="apellido">
+        <div *ngIf="registrationForm.get('apellido')?.invalid && (registrationForm.get('apellido')?.dirty || registrationForm.get('apellido')?.touched)" class="text-danger">
+          <div *ngIf="registrationForm.get('apellido')?.errors?.['required']">
+            El apellido es requerido.
           </div>
         </div>
       </div>
@@ -104,6 +114,16 @@
         <div *ngIf="registrationForm.get('telefonoContacto')?.invalid && (registrationForm.get('telefonoContacto')?.dirty || registrationForm.get('telefonoContacto')?.touched)" class="text-danger">
           <div *ngIf="registrationForm.get('telefonoContacto')?.errors?.['required']">
             El teléfono de contacto es requerido.
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <label for="contraseña" class="form-label">Contraseña</label>
+        <input formControlName="contraseña" type="tel" class="form-control" id="contraseña">
+        <div *ngIf="registrationForm.get('contraseña')?.invalid && (registrationForm.get('contraseña')?.dirty || registrationForm.get('contraseña')?.touched)" class="text-danger">
+          <div *ngIf="registrationForm.get('contraseña')?.errors?.['required']">
+            La contraseña es requerida.
           </div>
         </div>
       </div>

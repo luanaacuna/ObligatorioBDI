@@ -11,6 +11,22 @@
 
 {
   "LogId": 1,
-  "Username": "nombre_usuario",
   "Password": "contraseña_secreta"
+}
+
+{
+    "usuario":{
+  "Ci": 12345678,
+  "Nombre": "Juan",
+  "Apellido": "Perez",
+  "Fch_Nacimiento": "1990-01-01",
+  "Direccion": "Calle Principal 123",
+  "Telefono": 987654321,
+  "Email": "juan@example.com",
+  "LogId": 1
+},
+"login":{
+    "LogId": 1,
+  "password": "hola123"
+}
 }
