@@ -12,6 +12,7 @@ import { NavComponent } from './shared/nav/nav.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrationComponent } from './auth/registration/registration.component';
+import { FechaCarneComponent } from './fecha-carne/fecha-carne.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { RegistrationComponent } from './auth/registration/registration.componen
     InicioComponent,
     NavComponent,
     RegistrationComponent,
+    FechaCarneComponent,
   ],
   imports: [
     BrowserModule,
