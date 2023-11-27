@@ -1,0 +1,10 @@
+<div *ngIf="!periodoFinalizado; else periodoFinalizadoTemplate">
+    <h2>Agendar Fecha para Carné</h2>
+    <p>Selecciona una fecha entre el 01 y el 15 de noviembre de 2023:</p>
+    <input type="date" [(ngModel)]="fechaSeleccionada" [min]="fechaInicio.toISOString().split('T')[0]" [max]="fechaFin.toISOString().split('T')[0]">
+    <button (click)="agendar()" [disabled]="!fechaSeleccionada">Agendar</button>
+  </div>
+  <ng-template #periodoFinalizadoTemplate>
+    <p>El periodo para agendar ha finalizado.</p>
+  </ng-template>
+  
