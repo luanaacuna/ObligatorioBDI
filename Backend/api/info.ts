@@ -1,6 +1,9 @@
 import express, { Request, Response } from "express";
 import mysql, { Connection } from "mysql";
 import { Funcionario } from "../modelos/funcionario";
+import { Periodo } from "../modelos/periodos";
+import { Agenda } from "../modelos/agenda";
+import { Carnet } from "../modelos/carnet";
 import { connection } from "../app";
 import bodyParser from "body-parser";
 import { Login } from "../modelos/login";
