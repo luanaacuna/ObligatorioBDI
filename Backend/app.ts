@@ -2,12 +2,16 @@ import express from "express";
 import router from "./api/info";
 import bodyParser from "body-parser";
 
+
 const app = express();
 var corsOptions = {
-  origin: ["http://localhost:3306", "http://127.0.0.1:3306"],
+  origin: ["http://localhost:4200", "http://127.0.0.1:3306"],
 };
 const cors = require("cors");
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: ["http://localhost:4200", "http://127.0.0.1:3306"],
+  credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(router);
