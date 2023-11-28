@@ -3,6 +3,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { RegisterService } from 'src/app/services/register.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -28,7 +30,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private registerService: RegisterService
+    private registerService: RegisterService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -57,6 +60,7 @@ export class RegistrationComponent implements OnInit {
         email: this.registrationForm.get('correoElectronico')?.value,
         logId: this.logIdCounter,
       };
+      
       console.log('checkpoint 1', datosFuncionario);
       const datosLogin = {
         logId: this.logIdCounter,
@@ -73,6 +77,21 @@ export class RegistrationComponent implements OnInit {
             respuesta
           );
         });
+        if (this.tieneCarneSalud.value === false) {
+          // Navegar a la ruta deseada
+          this.router.navigate(['/fecha']);
+        } else {
+          // Registro normal
+          this.registerService
+            .register(datosFuncionario, datosLogin)
+            .subscribe((respuesta) => {
+              console.log(
+                'Registro exitoso y checkpoint 6',
+                this.registrationForm.value,
+                respuesta
+              );
+            });
+        }
     } else {
       this.registrationForm.markAllAsTouched();
       alert('Error al ingresar los datos.');
