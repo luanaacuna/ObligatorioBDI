@@ -1,6 +1,6 @@
-CREATE DATABASE Clinica_UCU;
+CREATE DATABASE my_bd;
 
-USE ClinicaUCUSalud;
+USE my_bd;
 
 CREATE TABLE `logins` (
   `LogId` int NOT NULL,

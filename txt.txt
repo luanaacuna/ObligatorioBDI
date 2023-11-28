@@ -1,4 +1,6 @@
-{
+Algunos datos que se pueden probar en los endpoints en postman
+
+funcionario solo (sirve para eliminar) {
   "ci": "12345678",
   "nombre": "Juan",
   "apellido": "Pérez",
@@ -9,12 +11,12 @@
   "logId": "1"
 }
 
-{
+Login: {
   "LogId": 1,
   "Password": "contraseña_secreta"
 }
 
-{
+funcionarios (sirve para crear un funcionario y darle su propio login): {
     "usuario":{
   "Ci": 12345678,
   "Nombre": "Juan",
