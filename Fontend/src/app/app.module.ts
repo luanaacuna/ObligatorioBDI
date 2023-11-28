@@ -13,6 +13,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { FechaCarneComponent } from './fecha-carne/fecha-carne.component';
+import { RegistroExitosoComponent } from './registro-exitoso/registro-exitoso.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FechaCarneComponent } from './fecha-carne/fecha-carne.component';
     NavComponent,
     RegistrationComponent,
     FechaCarneComponent,
+    RegistroExitosoComponent,
   ],
   imports: [
     BrowserModule,
